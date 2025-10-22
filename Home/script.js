@@ -13,10 +13,6 @@ document.getElementById('logBtn').addEventListener("click",()=>{
 //update image gallery
 function updateImages(){
     imageContainer.innerHTML = "";
-    if(fetchedImages.length === 0){
-        imageContainer.innerHTML = "<p>No images uploaded yet.</p>";
-        return;
-    }
 
     fetchedImages.forEach(image => {
         const imgElement = document.createElement("img");
@@ -324,4 +320,5 @@ function isTokenExpired(token) {
 }
 function callProfilePage(){
   window.location.href = "../Profile/"
+
 }
