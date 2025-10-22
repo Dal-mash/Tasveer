@@ -51,42 +51,57 @@ document.getElementById('signupForm').addEventListener('submit', async (e) => {
   }
 
   try {
-    // Step 1: Sign up
-    const signupResponse = await fetch('https://backend-production-fea2.up.railway.app/sign-up', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ username, email, password })
-    });
+  // Step 1: Sign up
+  const signupResponse = await fetch('https://backend-production-fea2.up.railway.app/sign-up', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ username, email, password })
+  });
 
-    const signupData = await signupResponse.json();
-
-    if (!signupResponse.ok) {
-      alert(signupData.message || "Sign-up failed. Please try again.");
-      return;
-    }
-
-    alert("Sign-up successful! Logging you in...");
-
-    // Step 2: Auto-login after successful signup
-    const loginResponse = await fetch('https://backend-production-fea2.up.railway.app/Sign-in', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, password })
-    });
-
-    const loginData = await loginResponse.json();
-    const { userId, token } = loginData;
-
-    if (loginResponse.ok && token) {
-      localStorage.setItem("token", token);
-      localStorage.setItem("userId", userId);
-      window.location.href = "./Home/";
-    } else {
-      alert(loginData.message || "Login after sign-up failed. Please log in manually.");
-    }
-
-  } catch (error) {
-    console.error("Error during signup/login:", error);
-    alert("An unexpected error occurred. Please try again later.");
+  let signupData;
+  try {
+    signupData = await signupResponse.json();
+  } catch {
+    const text = await signupResponse.text(); // fallback if backend sends plain text
+    signupData = { message: text };
   }
+
+  if (!signupResponse.ok) {
+    alert(signupData.message || "Sign-up failed. Please try again.");
+    return;
+  }
+
+  alert("Sign-up successful! Logging you in...");
+
+  // Step 2: Auto-login after successful signup
+  const loginResponse = await fetch('https://backend-production-fea2.up.railway.app/Sign-in', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ email, password })
+  });
+
+  let loginData;
+  try {
+    loginData = await loginResponse.json();
+  } catch {
+    const text = await loginResponse.text();
+    loginData = { message: text };
+  }
+
+  const { userId, token } = loginData;
+
+  if (loginResponse.ok && token) {
+    localStorage.setItem("token", token);
+    localStorage.setItem("userId", userId);
+    window.location.href = "./Home/";
+  } else {
+    alert(loginData.message || "Login after sign-up failed. Please log in manually.");
+  }
+
+} catch (error) {
+  console.error("Error during signup/login:", error);
+  alert("An unexpected error occurred. Please try again later.");
+}
+
 });
+
