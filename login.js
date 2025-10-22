@@ -50,20 +50,6 @@ document.getElementById('signupForm').addEventListener('submit', async (e) => {
     return;
   }
 
-  /////////////////////////////////////
-/// SIGN UP FORM
-document.getElementById('signupForm').addEventListener('submit', async (e) => {
-  e.preventDefault();
-
-  const username = document.getElementById('signupName').value.trim();
-  const email = document.getElementById('signupEmail').value.trim();
-  const password = document.getElementById('signupPassword').value.trim();
-
-  if (!username || !email || !password) {
-    alert("Please fill out all fields.");
-    return;
-  }
-
   try {
     // Step 1: Sign up
     const signupResponse = await fetch('https://backend-production-fea2.up.railway.app/sign-up', {
@@ -118,7 +104,3 @@ document.getElementById('signupForm').addEventListener('submit', async (e) => {
     alert("An unexpected error occurred. Please try again later.");
   }
 });
-
-});
-
-
