@@ -11,18 +11,20 @@ document.getElementById('logBtn').addEventListener("click",()=>{
 
 
 //update image gallery
-function updateImages(){
-    imageContainer.innerHTML = "";
+function updateImages() {
+  imageContainer.innerHTML = "";
 
-    fetchedImages.forEach(image => {
-        const imgElement = document.createElement("img");
-        imgElement.src = image;
-        imgElement.alt = "alt image";
-        imgElement.classList.add("uploaded-image");
+  fetchedImages.forEach(image => {
+    const imgElement = document.createElement("img");
+    imgElement.src = image;
+    imgElement.alt = "uploaded image";
+    imgElement.classList.add("uploaded-image");
     imageContainer.appendChild(imgElement);
-    });
-    console.log("Images updated");
+  });
+
+  console.log("Images updated");
 }
+
 
 /// ADD TO GALLERY
 function addToGallery(image) {
@@ -322,3 +324,4 @@ function callProfilePage(){
   window.location.href = "../Profile/"
 
 }
+
