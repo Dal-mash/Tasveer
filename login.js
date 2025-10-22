@@ -45,11 +45,11 @@ document.getElementById('signupForm').addEventListener('submit', async function(
     });
 
     if (!signupResponse.ok) {
-      notify("Sign-up failed. Please try again.", "error");
+      alert("Sign-up failed. Please try again.");
       return;
     }
 
-    notify("Sign-up successful! Logging you in...", "success");
+    alert("Sign-up successful! Logging you in...");
 
     // Step 2: Auto-login after signup
     const loginResponse = await fetch('https://backend-production-fea2.up.railway.app/Sign-in', {
@@ -64,11 +64,11 @@ document.getElementById('signupForm').addEventListener('submit', async function(
       localStorage.setItem("token", token);
       window.location.href = "./Home/";
     } else {
-      notify("No token received. Please log in manually.", "warn");
+      alert("No token received. Please log in manually.");
     }
 
   } catch (error) {
     console.error("Error during signup/login:", error);
-    notify("An unexpected error occurred.", "error");
+    alert("An unexpected error occurred.");
   }
 });
